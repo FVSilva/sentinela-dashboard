@@ -142,8 +142,8 @@ export default function LoginScreen({ onLogin }) {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-[10px] text-gray-800 mt-6 uppercase tracking-widest">
-          Powered by Nexus Forge
+        <p className="text-center text-[10px] opacity-0 mt-6 uppercase tracking-widest select-none">
+          CS Muniz &amp; Co
         </p>
       </div>
     </div>
