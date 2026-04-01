@@ -143,7 +143,7 @@ export default function LoginScreen({ onLogin }) {
 
         {/* Footer */}
         <p className="text-center text-[10px] text-gray-800 mt-6 uppercase tracking-widest">
-          Muniz &amp; Co · Powered by Nexus Forge
+          Powered by Nexus Forge
         </p>
       </div>
     </div>
