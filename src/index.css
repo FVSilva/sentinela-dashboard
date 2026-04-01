@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #080808;
+    color: #f1f1f1;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+}
+
+@layer components {
+  .card {
+    background: #111113;
+    border: 1px solid #1e1e22;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    border-color: #2a2a30;
+  }
+  .card-expanded {
+    border-color: #3a1020;
+    box-shadow: 0 0 0 1px #3a1020, 0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  /* Health badges */
+  .badge-green  { @apply bg-emerald-500/10 text-emerald-400 border border-emerald-500/25; }
+  .badge-yellow { @apply bg-amber-500/10   text-amber-400   border border-amber-500/25; }
+  .badge-red    { @apply bg-red-500/10     text-red-400     border border-red-500/25; }
+  .badge-gray   { @apply bg-white/5        text-gray-500    border border-white/10; }
+
+  /* Surface levels */
+  .surface-1 { background: #161618; border: 1px solid #1e1e22; }
+  .surface-2 { background: #1a1a1d; border: 1px solid #242428; }
+
+  /* Red accent button */
+  .btn-accent {
+    background-color: #e11d48;
+    color: white;
+    font-weight: 500;
+    border-radius: 0.75rem;
+    transition: background-color 0.15s;
+  }
+  .btn-accent:hover {
+    background-color: #f43f5e;
+  }
+
+  /* Tab active */
+  .tab-active {
+    background: #3a1020;
+    color: #fb7185;
+    border-color: #5a1830;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a44; }
+
+/* Noise texture overlay on header */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
