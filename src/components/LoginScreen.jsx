@@ -75,7 +75,7 @@ export default function LoginScreen({ onLogin }) {
             style={{ textShadow: '0 0 40px rgba(220,38,38,0.5)' }}>
             SENTINELA
           </h1>
-          <p className="text-xs text-gray-500 uppercase tracking-[0.25em]">Customer Intelligence</p>
+          <p className="text-xs text-white uppercase tracking-[0.25em]">Customer Intelligence</p>
         </div>
 
         {/* Card */}
@@ -87,14 +87,14 @@ export default function LoginScreen({ onLogin }) {
             boxShadow: '0 0 0 1px rgba(220,38,38,0.1), 0 32px 80px rgba(0,0,0,0.6)',
           }}>
 
-          <p className="text-sm text-gray-400 mb-6 text-center leading-relaxed">
+          <p className="text-sm text-white mb-6 text-center leading-relaxed">
             Acesse o painel de monitoramento<br />
-            <span className="text-gray-600">e inteligência dos seus clientes</span>
+            <span className="text-white/70">e inteligência dos seus clientes</span>
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-[11px] text-gray-600 uppercase tracking-wider mb-1.5">
+              <label className="block text-[11px] text-white uppercase tracking-wider mb-1.5">
                 Senha de acesso
               </label>
               <input
@@ -142,7 +142,7 @@ export default function LoginScreen({ onLogin }) {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-[10px] opacity-0 mt-6 uppercase tracking-widest select-none">
+        <p className="text-center text-[10px] text-white mt-6 uppercase tracking-widest">
           CS Muniz &amp; Co
         </p>
       </div>
