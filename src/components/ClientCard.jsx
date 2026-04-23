@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, startTransition } from 'react'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { MessageSquare, DollarSign } from 'lucide-react'
@@ -26,7 +26,7 @@ export default function ClientCard({ client }) {
     <>
       <div
         className="card cursor-pointer hover:border-white/[0.12] active:scale-[0.99] transition-all duration-200 select-none"
-        onClick={() => setOpen(true)}
+        onClick={() => startTransition(() => setOpen(true))}
       >
         {/* Accent bar for high churn */}
         {client.churnRisk.color === 'red' && (
