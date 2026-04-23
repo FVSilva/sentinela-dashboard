@@ -1,9 +1,10 @@
+import { useMemo } from 'react'
 import { buildCalendarDays } from '../utils/metrics'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
-function DayCell({ day, compact, selected, onClick }) {
-  const isToday    = format(new Date(), 'yyyy-MM-dd') === day.key
+function DayCell({ day, compact, selected, onClick, todayKey }) {
+  const isToday    = todayKey === day.key
   const isSelected = selected === day.key
 
   return (
@@ -34,7 +35,8 @@ export default function CommunicationCalendar({
   selectedDay = null,
   onDaySelect,
 }) {
-  const calDays    = buildCalendarDays(communicationDays, days)
+  const todayKey = useMemo(() => format(new Date(), 'yyyy-MM-dd'), [])
+  const calDays  = useMemo(() => buildCalendarDays(communicationDays, days), [communicationDays, days])
   const activeDays = calDays.filter(d => d.active).length
   const pct        = Math.round((activeDays / days) * 100)
 
@@ -68,6 +70,7 @@ export default function CommunicationCalendar({
             compact={compact}
             selected={selectedDay}
             onClick={handleClick}
+            todayKey={todayKey}
           />
         ))}
       </div>

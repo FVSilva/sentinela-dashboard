@@ -3,6 +3,7 @@ import logoImg from './assets/logo.png'
 import { useClientData } from './hooks/useClientData'
 import ClientCard from './components/ClientCard'
 import LoginScreen from './components/LoginScreen'
+import ErrorBoundary from './components/ErrorBoundary'
 import { Search, RefreshCw, AlertTriangle, Users, DollarSign, Flame, Shield, LogOut } from 'lucide-react'
 import { formatFee } from './utils/metrics'
 
@@ -112,7 +113,7 @@ function FilterPill({ options, value, onChange }) {
 
 /* ── Dashboard (only mounts after login → data fetches) ── */
 function Dashboard({ onLogout }) {
-  const { clients, loading, error, progress } = useClientData()
+  const { clients, loading, error, progress, retry } = useClientData()
   const [search,       setSearch]  = useState('')
   const [squadFilter,  setSquad]   = useState('Todos')
   const [healthFilter, setHealth]  = useState('Todos')
@@ -146,7 +147,7 @@ function Dashboard({ onLogout }) {
   }, [clients, search, squadFilter, healthFilter, churnFilter, sortBy])
 
   if (loading) return <LoadingScreen progress={progress} />
-  if (error)   return <ErrorScreen error={error} onRetry={() => window.location.reload()} />
+  if (error)   return <ErrorScreen error={error} onRetry={retry} />
 
   return (
     <div className="min-h-screen" style={{ background: '#080808' }}>
@@ -256,9 +257,11 @@ export default function App() {
   }
 
   return (
-    <Dashboard onLogout={() => {
-      sessionStorage.removeItem('sentinela_auth')
-      setLoggedIn(false)
-    }} />
+    <ErrorBoundary>
+      <Dashboard onLogout={() => {
+        sessionStorage.removeItem('sentinela_auth')
+        setLoggedIn(false)
+      }} />
+    </ErrorBoundary>
   )
 }

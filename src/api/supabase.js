@@ -22,21 +22,26 @@ export async function fetchMessagesForGroup(groupId) {
 }
 
 export async function fetchAllMessages() {
-  // Fetch all messages with group info — paginated to 3000
   return query('messages', 'select=*,groups(group_name)&order=sent_at.desc&limit=3000')
 }
 
-/**
- * For a given groupId, returns a Set of date strings 'YYYY-MM-DD'
- * on which at least one message was sent.
- */
+// Fetches all messages from the last N days in a single bulk call.
+// Much more efficient than one call per client.
+export async function fetchAllRecentMessages(days = 31) {
+  const since = new Date()
+  since.setDate(since.getDate() - days)
+  const from = since.toISOString().slice(0, 10)
+  return query(
+    'messages',
+    `select=group_id,sender_name,sender_phone,created_at,sent_at,body,text,message,content,message_text&created_at=gte.${from}T00:00:00&order=created_at.asc&limit=15000`
+  )
+}
+
 export function buildCommunicationDaySet(messages) {
   const days = new Set()
   for (const msg of messages) {
     const ts = msg.sent_at || msg.created_at
-    if (ts) {
-      days.add(ts.slice(0, 10))
-    }
+    if (ts) days.add(ts.slice(0, 10))
   }
   return days
 }
