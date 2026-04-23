@@ -1,0 +1,24 @@
+name: Análise Diária WhatsApp
+
+on:
+  schedule:
+    - cron: '30 22 * * *'  # 19:30 horário de Brasília (UTC-3)
+  workflow_dispatch:        # permite rodar manualmente pelo GitHub
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Rodar análise diária
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+        run: node scripts/daily-analysis.js
