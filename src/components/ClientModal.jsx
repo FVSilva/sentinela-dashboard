@@ -3,7 +3,7 @@ import { format, parseISO, differenceInDays } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import {
   X, Users, Calendar, AlertTriangle, CheckCircle,
-  Clock, Layers, Sparkles, MessageSquare, Info, DollarSign
+  Clock, Layers, Sparkles, MessageSquare, Info, DollarSign, TrendingDown
 } from 'lucide-react'
 import CommunicationCalendar from './CommunicationCalendar'
 import HealthBadge from './HealthBadge'
@@ -216,8 +216,9 @@ function AIPanel({ client, selectedDay }) {
 }
 
 /* ── Modal ───────────────────────────────────────────────── */
-export default function ClientModal({ client, onClose }) {
-  const [selectedDay, setSelectedDay] = useState(null)
+export default function ClientModal({ client, onClose, onMarkChurn }) {
+  const [selectedDay,   setSelectedDay]   = useState(null)
+  const [confirmChurn,  setConfirmChurn]  = useState(false)
   const maxMessages = client.topSenders[0]?.count || 1
   const silentColor = client.silentDays >= 7 ? 'red' : client.silentDays >= 3 ? 'yellow' : 'green'
   const silentVC    = { red: 'text-red-400', yellow: 'text-amber-400', green: 'text-emerald-400' }
@@ -272,7 +273,7 @@ export default function ClientModal({ client, onClose }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 ml-4 flex-shrink-0">
+          <div className="flex items-center gap-3 ml-4 flex-shrink-0">
             <div className="text-right">
               <div className="flex items-center gap-1 text-white font-bold text-lg">
                 <DollarSign className="w-4 h-4 text-emerald-400" />
@@ -280,6 +281,35 @@ export default function ClientModal({ client, onClose }) {
               </div>
               <div className="text-[10px] text-gray-600 uppercase tracking-wider">fee/mês</div>
             </div>
+
+            {/* Churn button */}
+            {onMarkChurn && (
+              confirmChurn ? (
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => onMarkChurn(client)}
+                    className="px-2.5 py-1.5 rounded-lg bg-red-700 hover:bg-red-600 text-white text-[10px] font-bold transition-colors"
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    onClick={() => setConfirmChurn(false)}
+                    className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 text-[10px] transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmChurn(true)}
+                  title="Marcar como Churn"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-950/30 hover:bg-red-900/40 text-red-500 border border-red-900/30 text-[10px] font-medium transition-colors"
+                >
+                  <TrendingDown className="w-3 h-3" /> Churn
+                </button>
+              )
+            )}
+
             <button onClick={onClose}
               className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/5 hover:bg-red-950/40 text-gray-500 hover:text-red-400 transition-colors border border-white/[0.06]">
               <X className="w-4 h-4" />

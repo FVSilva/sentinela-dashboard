@@ -18,7 +18,7 @@ function StatBox({ label, value, color = 'default' }) {
   )
 }
 
-export default function ClientCard({ client }) {
+export default function ClientCard({ client, onMarkChurn }) {
   const [open, setOpen] = useState(false)
   const silentColor = client.silentDays >= 7 ? 'red' : client.silentDays >= 3 ? 'yellow' : 'green'
 
@@ -86,7 +86,13 @@ export default function ClientCard({ client }) {
         </div>
       </div>
 
-      {open && <ClientModal client={client} onClose={() => setOpen(false)} />}
+      {open && (
+        <ClientModal
+          client={client}
+          onClose={() => setOpen(false)}
+          onMarkChurn={onMarkChurn ? (c) => { onMarkChurn(c); setOpen(false) } : null}
+        />
+      )}
     </>
   )
 }
