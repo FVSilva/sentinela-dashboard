@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/nocodb-api/:path*", "destination": "https://nocodb.munizcotech.com.br/:path*" },
+    { "source": "/openai-api/:path*", "destination": "https://api.openai.com/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
